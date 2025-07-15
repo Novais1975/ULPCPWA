@@ -26,6 +26,7 @@ export default function DashboardOperacional({ user, onLogout }) {
   const [utilizador, setUtilizador] = useState(null);
   const [sharing, setSharing] = useState(false);
   const [coords, setCoords] = useState(null);
+  const [last, setLast] = useState(null);
   const watchIdRef = useRef(null);
 
   // Buscar info do utilizador autenticado
@@ -62,6 +63,14 @@ export default function DashboardOperacional({ user, onLogout }) {
           velocidade: speed
         },
       ]);
+      setLast({
+        latitude: lat,
+        longitude: lon,
+        direcao: direction,
+        velocidade: speed,
+      });
+    } else {
+      setLast(null);
     }
   }
 
@@ -116,6 +125,14 @@ export default function DashboardOperacional({ user, onLogout }) {
 
   if (!utilizador) return <div>A carregar dados...</div>;
 
+  // Se tiver uma última posição, mostra direção/velocidade, senão N/A
+  const direcaoVal = last && typeof last.direcao === "number"
+    ? `${last.direcao}º`
+    : "N/A";
+  const velocidadeVal = last && typeof last.velocidade === "number"
+    ? `${last.velocidade.toFixed(2)} m/s`
+    : "N/A";
+
   return (
     <div className="dashboard-card">
       <img src="/logoprotecaocivil.png" alt="Proteção Civil" className="logo" />
@@ -154,8 +171,8 @@ export default function DashboardOperacional({ user, onLogout }) {
               <Popup>
                 <b>Estou aqui</b><br />
                 <b>Coords:</b> {coords[0]?.toFixed(5)}, {coords[1]?.toFixed(5)}<br />
-                <b>Direção:</b> N/A<br />
-                <b>Velocidade:</b> N/A
+                <b>Direção:</b> {direcaoVal}<br />
+                <b>Velocidade:</b> {velocidadeVal}
               </Popup>
             </Marker>
             <MapAutoCenter position={coords} />
