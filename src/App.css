@@ -1,0 +1,376 @@
+/* Reset & background */
+html, body, #root {
+  height: 100%;
+  width: 100vw;
+  min-width: 100vw;
+  margin: 0;
+  padding: 0;
+  background: #f5f7fa;
+  font-family: 'Inter', 'Roboto', Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Centralização para login, register, etc */
+.center-wrapper {
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Cartão central para login/registo */
+.card {
+  background: #fff;
+  padding: 40px 32px;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px #0002;
+  max-width: 380px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Cartão do dashboard operacional */
+.dashboard-card {
+  background: #fff;
+  padding: 40px 32px;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px #0002;
+  max-width: 430px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+/* ----- PAINEL DE COMANDO DISPOSIÇÃO GERAL ----- */
+.painel-root {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100vw;
+  gap: 40px;
+  margin-top: 32px;
+}
+
+/* Card do mapa */
+.painel-mapa {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px #0002;
+  padding: 30px 32px 28px 32px;
+  min-width: 550px;
+  width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Logotipo grande do painel */
+.logo-painel {
+  display: block;
+  margin: 0 0 12px 0;
+  width: 110px;
+}
+
+/* Cabeçalho do painel */
+.painel-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 18px;
+}
+.painel-header h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 2.1em;
+}
+
+/* Mapa */
+.painel-mapa-leaflet {
+  width: 100%;
+  height: 530px;
+  margin-top: 10px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px #0002;
+}
+
+/* Card da gestão de utilizadores */
+.painel-utilizadores {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px #0002;
+  padding: 30px 32px 22px 32px;
+  min-width: 440px;
+  width: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---- Tabela de gestão de utilizadores ---- */
+.tabela-gestao {
+  width: 100%;
+  max-height: 330px;
+  overflow-y: auto;
+  overflow-x: auto;
+  background: #f7fafd;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px #0001;
+  margin-bottom: 18px;
+}
+.tabela-gestao table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: #223;
+  font-size: 1em;
+}
+.tabela-gestao th {
+  background: #eaf2fa;
+  color: #174A68;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  font-size: 1em;
+  border-right: 1px solid #e5e9ee;
+}
+.tabela-gestao tr {
+  background: #fff;
+}
+.tabela-gestao tr:nth-child(even) {
+  background: #f7fafd;
+}
+.tabela-gestao td, .tabela-gestao th {
+  padding: 7px 8px;
+  white-space: nowrap;
+  border-right: 1px solid #e5e9ee;
+  font-size: 0.88em;
+}
+.tabela-gestao td:last-child, .tabela-gestao th:last-child {
+  border-right: none;
+}
+
+/* ---- Botões de admin na tabela ---- */
+.promote-admin-btn {
+  width: 100%;
+  padding: 7px 0;
+  background: #15bc4b;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.88em;
+  font-weight: 700;
+  margin-bottom: 5px;
+  margin-top: 0;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: block;
+}
+.promote-admin-btn:hover {
+  background: #10993b;
+}
+.remove-admin-btn {
+  width: 100%;
+  padding: 7px 0;
+  background: #d0671c;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.88em;
+  font-weight: 700;
+  margin-bottom: 5px;
+  margin-top: 0;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: block;
+}
+.remove-admin-btn:hover {
+  background: #ad5310;
+}
+.stop-btn, .start-btn, .logout-btn {
+  margin-bottom: 3px !important;
+  margin-top: 3px !important;
+}
+
+/* Empilha botões nas células da tabela */
+.tabela-gestao .admin-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ---- Botões principais (restantes) ---- */
+button[type="submit"], .card button[type="submit"] {
+  width: 100%;
+  padding: 14px 0;
+  background: #174A68;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 7px;
+  font-size: 1.1rem;
+  margin-top: 8px;
+  transition: background 0.2s;
+  cursor: pointer;
+  box-shadow: 0 1px 4px #0001;
+}
+button[type="submit"]:hover, .card button[type="submit"]:hover {
+  background: #205c85;
+}
+.start-btn {
+  width: 100%;
+  padding: 14px 0;
+  background: #1BB24A;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.start-btn:hover { background: #139a3a; }
+.stop-btn {
+  width: 100%;
+  padding: 14px 0;
+  background: #d06613;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.stop-btn:hover { background: #ad5310; }
+.logout-btn {
+  width: 100%;
+  padding: 10px 0;
+  background: #aaa;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 1rem;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.logout-btn:hover { background: #666; }
+
+/* Link de ação alternativa */
+.alt-action {
+  text-align: center;
+  margin-top: 18px;
+}
+.alt-action button {
+  background: none;
+  border: none;
+  color: #EA6D22;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 2px;
+  text-decoration: underline;
+}
+.alt-action button:hover {
+  text-decoration: none;
+  color: #b95311;
+}
+.message {
+  margin-top: 12px;
+  color: darkred;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* Inputs */
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px 10px;
+  border: 1px solid #4543af;
+  border-radius: 7px;
+  margin: 10px 0 12px 0;
+  font-size: 1rem;
+  background: #ffffff;
+  color: #223 !important;
+  box-sizing: border-box;
+  outline: none;
+  transition: border 0.18s;
+}
+input:focus {
+  border: 1.5px solid #174A68;
+}
+input::placeholder {
+  color: #a0a0a0;
+  opacity: 1;
+}
+
+/* Logotipo pequeno */
+.logo {
+  display: block;
+  margin: 0 auto 32px auto;
+  width: 120px;
+}
+
+/* Título */
+h2 {
+  color: #174A68;
+  text-align: center;
+  margin-bottom: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Responsivo para ecrãs pequenos */
+@media (max-width: 1100px) {
+  .painel-root {
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+  }
+  .painel-mapa, .painel-utilizadores {
+    width: 138vw;
+    min-width: unset;
+    max-width: 139vw;
+    padding: 16px 6px;
+  }
+  .painel-mapa-leaflet {
+    height: 300px;
+  }
+}
+@media (max-width: 720px) {
+  .painel-mapa, .painel-utilizadores {
+    padding: 9px 1vw;
+  }
+  .painel-mapa-leaflet {
+    height: 210px;
+  }
+}
+@media (max-width: 480px) {
+  .card,
+  .dashboard-card {
+    padding: 24px 8px;
+    max-width: 98vw;
+  }
+  .logo, .logo-painel {
+    width: 70px;
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-size: 1.1rem;
+  }
+}
