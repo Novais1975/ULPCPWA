@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -107,8 +107,8 @@ export default function DashboardComando({ onLogout }) {
                       <span style={{ fontSize: "0.96em", color: "#357" }}>{u.unidade}</span>
                       <hr style={{ margin: "4px 0" }} />
                       <b>Coords:</b> {loc.latitude?.toFixed(5)}, {loc.longitude?.toFixed(5)}<br />
-                      <b>Direção:</b> {loc.direcao !== null ? loc.direcao + "º" : "N/A"}<br />
-                      <b>Velocidade:</b> {loc.velocidade !== null ? loc.velocidade.toFixed(1) + " km/h" : "N/A"}<br />
+                      <b>Direção:</b> {loc.direcao !== null && loc.direcao !== undefined ? loc.direcao + "º" : "N/A"}<br />
+                      <b>Velocidade:</b> {loc.velocidade !== null && loc.velocidade !== undefined ? loc.velocidade.toFixed(1) + " km/h" : "N/A"}<br />
                       <b>Data/Hora:</b> {loc.created_at ? new Date(loc.created_at).toLocaleString() : ""}
                     </div>
                   </Popup>

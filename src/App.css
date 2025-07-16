@@ -140,6 +140,7 @@ html, body, #root {
   background: #fff !important;
 }
 
+/* Botões agrupados por baixo da linha do utilizador */
 .acao-botoes {
   display: flex;
   flex-direction: row;
