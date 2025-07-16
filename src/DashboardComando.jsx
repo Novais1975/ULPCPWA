@@ -100,15 +100,21 @@ export default function DashboardComando({ onLogout }) {
                   position={[loc.latitude, loc.longitude]}
                 >
                   <Popup>
-                    <div style={{ fontSize: "1em", minWidth: 160 }}>
-                      <b>{u.nome}</b><br />
-                      <span style={{ fontSize: "0.96em", color: "#357" }}>{u.unidade}</span>
-                      <hr style={{ margin: "4px 0" }} />
-                      <b>Coords:</b> {loc.latitude?.toFixed(5)}, {loc.longitude?.toFixed(5)}<br />
-                      <b>Direção:</b> {loc.direcao !== null && loc.direcao !== undefined ? loc.direcao + "º" : "N/A"}<br />
-                      <b>Velocidade:</b> {loc.velocidade !== null && loc.velocidade !== undefined ? (loc.velocidade * 3.6).toFixed(1) + " km/h" : "N/A"}<br />
-                      <b>Data/Hora:</b> {loc.created_at ? new Date(loc.created_at).toLocaleString() : ""}
-                    </div>
+                      <div style={{ fontSize: "1em", minWidth: 160 }}>
+                        <b>{u.nome}</b><br />
+                        <span style={{ fontSize: "0.96em", color: "#357" }}>{u.unidade}</span>
+                        <hr style={{ margin: "4px 0" }} />
+                        <b>Coords:</b> {loc.latitude?.toFixed(5)}, {loc.longitude?.toFixed(5)}<br />
+                        <b>Direção:</b> {loc.direcao !== null && loc.direcao !== undefined ? loc.direcao + "º" : "N/A"}<br />
+                        <b>Velocidade:</b> {loc.velocidade !== null && loc.velocidade !== undefined ? (loc.velocidade * 3.6).toFixed(1) + " km/h" : "N/A"}<br />
+                        <b>Data/Hora:</b>{" "}
+                        {loc.created_at
+                          ? new Date(loc.created_at).toLocaleString("pt-PT", {
+                              year: "numeric", month: "2-digit", day: "2-digit",
+                              hour: "2-digit", minute: "2-digit", second: "2-digit"
+                            })
+                          : "N/A"}
+                      </div>
                   </Popup>
                 </Marker>
               );
