@@ -10,7 +10,7 @@ html, body, #root {
   overflow-x: hidden;
 }
 
-/* Centralização para login, register, etc */
+/* Centralização */
 .center-wrapper {
   min-height: 100vh;
   height: 100vh;
@@ -19,7 +19,7 @@ html, body, #root {
   justify-content: center;
 }
 
-/* Cartão central para login/registo */
+/* Cartão login/registo */
 .card {
   background: #fff;
   padding: 40px 32px;
@@ -33,7 +33,7 @@ html, body, #root {
   align-items: center;
 }
 
-/* Cartão do dashboard operacional */
+/* Cartão dashboard operacional */
 .dashboard-card {
   background: #fff;
   padding: 40px 32px;
@@ -64,40 +64,41 @@ html, body, #root {
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 2px 12px #0002;
-  padding: 30px 32px 28px 32px;
-  min-width: 550px;
-  width: 680px;
+  padding: 28px 24px 26px 24px;
+  min-width: 530px;
+  width: 660px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: flex-start;
 }
 
-/* Logotipo grande do painel */
-.logo-painel {
-  display: block;
-  margin: 0 0 12px 0;
-  width: 110px;
-}
-
-/* Cabeçalho do painel */
-.painel-header {
+.painel-mapa-header {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  margin-bottom: 8px;
-  gap: 18px;
-}
-.painel-header h2 {
-  margin: 0;
-  padding: 0;
-  font-size: 2.1em;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 5px;
 }
 
-/* Mapa */
+.logo-painel {
+  width: 88px;
+  margin-right: 18px;
+  margin-bottom: 0;
+  margin-top: 4px;
+}
+
+.painel-mapa-title {
+  font-size: 2.2rem;
+  color: #174A68;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 .painel-mapa-leaflet {
   width: 100%;
-  height: 530px;
-  margin-top: 10px;
+  height: 525px;
+  margin-top: 18px;
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 1px 6px #0002;
@@ -108,112 +109,67 @@ html, body, #root {
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 2px 12px #0002;
-  padding: 30px 32px 22px 32px;
-  min-width: 440px;
-  width: 640px;
+  padding: 30px 26px 20px 26px;
+  min-width: 420px;
+  width: 490px;
+  max-width: 98vw;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* ---- Tabela de gestão de utilizadores ---- */
+/* Tabela de gestão - cores melhoradas */
 .tabela-gestao {
   width: 100%;
-  max-height: 330px;
+  max-height: 340px;
   overflow-y: auto;
-  overflow-x: auto;
   background: #f7fafd;
   border-radius: 8px;
   box-shadow: 0 1px 2px #0001;
   margin-bottom: 18px;
 }
+
 .tabela-gestao table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  color: #223;
-  font-size: 1em;
+  font-size: 0.95em;
 }
+
 .tabela-gestao th {
-  background: #eaf2fa;
+  font-size: 1.05em;
+  background: #e4edf7;
   color: #174A68;
-  font-weight: 800;
-  letter-spacing: 0.01em;
-  font-size: 1em;
-  border-right: 1px solid #e5e9ee;
+  padding: 8px 6px;
+  font-weight: 700;
 }
-.tabela-gestao tr {
+
+.tabela-gestao td {
+  padding: 6px 6px;
+  font-size: 0.97em;
   background: #fff;
-}
-.tabela-gestao tr:nth-child(even) {
-  background: #f7fafd;
-}
-.tabela-gestao td, .tabela-gestao th {
-  padding: 7px 8px;
-  white-space: nowrap;
-  border-right: 1px solid #e5e9ee;
-  font-size: 0.88em;
-}
-.tabela-gestao td:last-child, .tabela-gestao th:last-child {
-  border-right: none;
+  color: #174A68;
+  border-bottom: 1px solid #e4e4e4;
 }
 
-/* ---- Botões de admin na tabela ---- */
-.promote-admin-btn {
-  width: 100%;
-  padding: 7px 0;
-  background: #15bc4b;
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  font-size: 0.88em;
-  font-weight: 700;
-  margin-bottom: 5px;
-  margin-top: 0;
-  cursor: pointer;
-  transition: background 0.15s;
-  display: block;
-}
-.promote-admin-btn:hover {
-  background: #10993b;
-}
-.remove-admin-btn {
-  width: 100%;
-  padding: 7px 0;
-  background: #d0671c;
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  font-size: 0.88em;
-  font-weight: 700;
-  margin-bottom: 5px;
-  margin-top: 0;
-  cursor: pointer;
-  transition: background 0.15s;
-  display: block;
-}
-.remove-admin-btn:hover {
-  background: #ad5310;
-}
-.stop-btn, .start-btn, .logout-btn {
-  margin-bottom: 3px !important;
-  margin-top: 3px !important;
+.tabela-gestao tr:last-child td {
+  border-bottom: none;
 }
 
-/* Empilha botões nas células da tabela */
-.tabela-gestao .admin-action-buttons {
+/* Ações dos botões - stack */
+.acao-botoes {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
-/* ---- Botões principais (restantes) ---- */
+/* Botões principais - cores melhoradas */
 button[type="submit"], .card button[type="submit"] {
   width: 100%;
   padding: 14px 0;
   background: #174A68;
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
   border: none;
   border-radius: 7px;
   font-size: 1.1rem;
@@ -222,9 +178,11 @@ button[type="submit"], .card button[type="submit"] {
   cursor: pointer;
   box-shadow: 0 1px 4px #0001;
 }
+
 button[type="submit"]:hover, .card button[type="submit"]:hover {
   background: #205c85;
 }
+
 .start-btn {
   width: 100%;
   padding: 14px 0;
@@ -232,7 +190,7 @@ button[type="submit"]:hover, .card button[type="submit"]:hover {
   color: #fff;
   border: none;
   border-radius: 7px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   margin-top: 8px;
   margin-bottom: 10px;
@@ -240,6 +198,7 @@ button[type="submit"]:hover, .card button[type="submit"]:hover {
   transition: background 0.2s;
 }
 .start-btn:hover { background: #139a3a; }
+
 .stop-btn {
   width: 100%;
   padding: 14px 0;
@@ -247,7 +206,7 @@ button[type="submit"]:hover, .card button[type="submit"]:hover {
   color: #fff;
   border: none;
   border-radius: 7px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   margin-top: 8px;
   margin-bottom: 10px;
@@ -255,6 +214,7 @@ button[type="submit"]:hover, .card button[type="submit"]:hover {
   transition: background 0.2s;
 }
 .stop-btn:hover { background: #ad5310; }
+
 .logout-btn {
   width: 100%;
   padding: 10px 0;
@@ -268,6 +228,59 @@ button[type="submit"]:hover, .card button[type="submit"]:hover {
   transition: background 0.2s;
 }
 .logout-btn:hover { background: #666; }
+
+/* Botões de gestão de utilizadores */
+.btn-admin {
+  background: #d06613 !important;
+  color: #fff !important;
+  font-weight: 600;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 0;
+  width: 100%;
+  font-size: 0.98em;
+  cursor: pointer;
+  margin-bottom: 2px;
+  transition: background 0.18s;
+}
+.btn-admin:hover { background: #ad5310 !important; }
+
+.btn-ativar {
+  background: #1BB24A !important;
+  color: #fff !important;
+  font-weight: 600;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 0;
+  width: 100%;
+  font-size: 0.98em;
+  cursor: pointer;
+  margin-bottom: 2px;
+  transition: background 0.18s;
+}
+.btn-ativar:hover { background: #139a3a !important; }
+
+.btn-eliminar {
+  background: #b6b6b6 !important;
+  color: #fff !important;
+  font-weight: 600;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 0;
+  width: 100%;
+  font-size: 0.97em;
+  cursor: pointer;
+  margin-bottom: 0;
+  transition: background 0.15s;
+}
+.btn-eliminar:hover { background: #7e7e7e !important; }
+
+.tabela-gestao td span {
+  font-weight: 600;
+}
+
+.tabela-gestao td .sim { color: #1BB24A; }
+.tabela-gestao td .nao { color: #c92424; }
 
 /* Link de ação alternativa */
 .alt-action {
@@ -304,7 +317,7 @@ input[type="text"] {
   border: 1px solid #4543af;
   border-radius: 7px;
   margin: 10px 0 12px 0;
-  font-size: 1rem;
+  font-size: 1.08rem;
   background: #ffffff;
   color: #223 !important;
   box-sizing: border-box;
@@ -343,34 +356,76 @@ h2 {
     align-items: center;
   }
   .painel-mapa, .painel-utilizadores {
-    width: 138vw;
+    width: 98vw;
     min-width: unset;
-    max-width: 139vw;
+    max-width: 99vw;
     padding: 16px 6px;
   }
   .painel-mapa-leaflet {
     height: 300px;
   }
 }
+
 @media (max-width: 720px) {
   .painel-mapa, .painel-utilizadores {
     padding: 9px 1vw;
+    width: 99vw;
   }
   .painel-mapa-leaflet {
-    height: 210px;
+    height: 200px;
   }
 }
+
+@media (max-width: 600px) {
+  .painel-mapa-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .painel-mapa-title {
+    font-size: 1.3rem;
+  }
+  .logo-painel {
+    width: 52px;
+  }
+  .painel-utilizadores, .painel-mapa {
+    min-width: unset;
+    width: 99vw;
+    padding: 8px 2vw;
+  }
+  .tabela-gestao th, .tabela-gestao td {
+    font-size: 0.85em;
+    padding: 5px 3px;
+  }
+}
+
 @media (max-width: 480px) {
   .card,
   .dashboard-card {
-    padding: 24px 8px;
-    max-width: 98vw;
+    padding: 18px 4px;
+    max-width: 99vw;
   }
   .logo, .logo-painel {
-    width: 70px;
-    margin-bottom: 12px;
+    width: 52px;
+    margin-bottom: 8px;
   }
   h2 {
-    font-size: 1.1rem;
+    font-size: 1.03rem;
+  }
+  .painel-utilizadores, .painel-mapa {
+    min-width: unset;
+    width: 99vw;
+    padding: 5px 0vw;
+  }
+  .tabela-gestao th, .tabela-gestao td {
+    font-size: 0.8em;
+    padding: 4px 1px;
+  }
+  .painel-mapa-title {
+    font-size: 1.04rem;
+  }
+  .acao-botoes {
+    flex-direction: column;
+    gap: 2px;
   }
 }
