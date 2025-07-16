@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -18,12 +18,10 @@ export default function DashboardComando({ onLogout }) {
   useEffect(() => {
     fetchUtilizadores();
     fetchLocalizacoes();
-
     const interval = setInterval(() => {
       fetchUtilizadores();
       fetchLocalizacoes();
     }, 8000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -80,8 +78,8 @@ export default function DashboardComando({ onLogout }) {
           <h2 style={{ marginLeft: 18, marginBottom: 0 }}>Painel de Comando</h2>
         </div>
         <div style={{ fontWeight: 600, marginBottom: 10, color: "#135" }}>
-          Operacionais ativos:{" "}
-          {utilizadores.filter(u => u.ativo).length}
+          Operacionais a partilhar localização:{" "}
+          {localizacoes.length}
         </div>
         <div className="painel-mapa-leaflet">
           <MapContainer
@@ -93,7 +91,7 @@ export default function DashboardComando({ onLogout }) {
               attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {utilizadores.filter(u => u.ativo).map(u => {
+            {utilizadores.map(u => {
               const loc = getLastLocalizacao(u.id);
               if (!loc) return null;
               return (
@@ -108,7 +106,7 @@ export default function DashboardComando({ onLogout }) {
                       <hr style={{ margin: "4px 0" }} />
                       <b>Coords:</b> {loc.latitude?.toFixed(5)}, {loc.longitude?.toFixed(5)}<br />
                       <b>Direção:</b> {loc.direcao !== null && loc.direcao !== undefined ? loc.direcao + "º" : "N/A"}<br />
-                      <b>Velocidade:</b> {loc.velocidade !== null && loc.velocidade !== undefined ? loc.velocidade.toFixed(1) + " km/h" : "N/A"}<br />
+                      <b>Velocidade:</b> {loc.velocidade !== null && loc.velocidade !== undefined ? (loc.velocidade * 3.6).toFixed(1) + " km/h" : "N/A"}<br />
                       <b>Data/Hora:</b> {loc.created_at ? new Date(loc.created_at).toLocaleString() : ""}
                     </div>
                   </Popup>
