@@ -15,7 +15,6 @@ export default function DashboardComando({ onLogout }) {
   const [utilizadores, setUtilizadores] = useState([]);
   const [localizacoes, setLocalizacoes] = useState([]);
 
-  // Buscar utilizadores e localizações ativas
   useEffect(() => {
     fetchUtilizadores();
     fetchLocalizacoes();
@@ -44,7 +43,6 @@ export default function DashboardComando({ onLogout }) {
     setLocalizacoes(data || []);
   }
 
-  // Ações admin
   async function bloquearUtilizador(id) {
     await supabase.from("utilizadores").update({ ativo: false }).eq("id", id);
     fetchUtilizadores();
@@ -68,7 +66,6 @@ export default function DashboardComando({ onLogout }) {
     }
   }
 
-  // Helpers
   function getLastLocalizacao(utilizadorId) {
     const locs = localizacoes.filter(l => l.utilizador_id === utilizadorId);
     return locs.length ? locs[0] : null;

@@ -1,3 +1,4 @@
+/* Reset & background */
 html, body, #root {
   height: 100%;
   width: 100vw;
@@ -9,6 +10,7 @@ html, body, #root {
   overflow-x: hidden;
 }
 
+/* Centralização para login, register, etc */
 .center-wrapper {
   min-height: 100vh;
   height: 100vh;
@@ -17,7 +19,22 @@ html, body, #root {
   justify-content: center;
 }
 
-.card, .dashboard-card {
+/* Cartão central para login/registo */
+.card {
+  background: #fff;
+  padding: 40px 32px;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px #0002;
+  max-width: 380px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Cartão do dashboard operacional */
+.dashboard-card {
   background: #fff;
   padding: 40px 32px;
   border-radius: 18px;
@@ -31,23 +48,7 @@ html, body, #root {
   align-items: center;
 }
 
-.logo, .logo-painel {
-  display: block;
-  width: 120px;
-  margin-bottom: 12px;
-}
-
-.logo-painel {
-  margin-bottom: 0;
-}
-
-h2, h3 {
-  color: #174A68;
-  text-align: left;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
+/* ----- PAINEL DE COMANDO DISPOSIÇÃO GERAL ----- */
 .painel-root {
   display: flex;
   flex-direction: row;
@@ -58,34 +59,42 @@ h2, h3 {
   margin-top: 32px;
 }
 
+/* Card do mapa */
 .painel-mapa {
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 2px 12px #0002;
-  padding: 28px 30px 24px 30px;
-  min-width: 460px;
-  width: 630px;
+  padding: 30px 32px 28px 32px;
+  min-width: 520px;
+  width: 620px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
+.logo-painel {
+  display: block;
+  width: 100px;
+}
+
+/* Mapa */
 .painel-mapa-leaflet {
   width: 100%;
-  height: 480px;
-  margin-top: 14px;
+  height: 430px;
+  margin-top: 16px;
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 1px 6px #0002;
 }
 
+/* Card da gestão de utilizadores */
 .painel-utilizadores {
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 2px 12px #0002;
-  padding: 28px 32px 18px 32px;
-  min-width: 370px;
-  width: 510px;
+  padding: 30px 32px 22px 32px;
+  min-width: 380px;
+  width: 520px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -93,7 +102,7 @@ h2, h3 {
 
 .tabela-gestao {
   width: 100%;
-  max-height: 370px;
+  max-height: 330px;
   overflow-y: auto;
   background: #f7fafd;
   border-radius: 8px;
@@ -106,60 +115,43 @@ h2, h3 {
   border-collapse: separate;
   border-spacing: 0;
   font-size: 0.95em;
+  background: #fff;
 }
 
 .tabela-gestao th, .tabela-gestao td {
-  padding: 5px 8px;
+  padding: 6px 8px;
   white-space: nowrap;
   text-align: left;
   border-bottom: 1px solid #e3e7ee;
 }
 
-.tabela-gestao tr:nth-child(2n) {
-  background: #f5f8fd;
+.tabela-gestao th {
+  font-size: 1em;
+  background: #f0f4fa;
+  color: #174A68;
+}
+
+.tabela-gestao td {
+  font-size: 1em;
+  background: #fff;
+}
+
+.tabela-gestao tr {
+  background: #fff !important;
 }
 
 .acao-botoes {
   display: flex;
   flex-direction: row;
-  gap: 12px;
+  gap: 10px;
   justify-content: flex-start;
-  padding: 7px 0 10px 2px;
+  padding: 10px 0 2px 2px;
 }
 
-@media (max-width: 700px) {
-  .painel-root {
-    flex-direction: column;
-    gap: 26px;
-    align-items: center;
-  }
-  .painel-mapa, .painel-utilizadores {
-    width: 98vw;
-    min-width: unset;
-    max-width: 99vw;
-    padding: 14px 5px;
-  }
-  .painel-mapa-leaflet {
-    height: 220px;
-  }
-  .tabela-gestao {
-    max-height: 200px;
-  }
-}
-
-@media (max-width: 470px) {
-  .painel-mapa, .painel-utilizadores, .card, .dashboard-card {
-    padding: 12px 4px;
-    max-width: 99vw;
-  }
-  .painel-mapa-leaflet {
-    height: 140px;
-  }
-  .logo, .logo-painel {
-    width: 62px;
-    margin-bottom: 4px;
-  }
-  h2, h3 { font-size: 1rem; }
+.acao-botoes button {
+  min-width: 110px;
+  font-size: 1em;
+  margin-bottom: 0;
 }
 
 .btn-admin {
@@ -167,41 +159,94 @@ h2, h3 {
   color: #fff;
   border: none;
   border-radius: 7px;
-  padding: 7px 14px;
-  font-size: 1em;
   font-weight: 600;
+  padding: 8px 12px;
   cursor: pointer;
-  margin-right: 7px;
-  transition: background 0.17s;
+  transition: background 0.2s;
 }
-.btn-admin:hover { background: #ad5310; }
+.btn-admin:hover { background: #b04a0a; }
 
 .btn-ativar {
-  background: #1BB24A;
+  background: #1bb24a;
   color: #fff;
   border: none;
   border-radius: 7px;
-  padding: 7px 14px;
-  font-size: 1em;
   font-weight: 600;
+  padding: 8px 12px;
   cursor: pointer;
-  margin-right: 7px;
-  transition: background 0.16s;
+  transition: background 0.2s;
 }
-.btn-ativar:hover { background: #139a3a; }
+.btn-ativar:hover { background: #128633; }
 
 .btn-eliminar {
   background: #888;
   color: #fff;
   border: none;
   border-radius: 7px;
-  padding: 7px 14px;
-  font-size: 1em;
   font-weight: 600;
+  padding: 8px 12px;
   cursor: pointer;
-  transition: background 0.18s;
+  transition: background 0.2s;
 }
-.btn-eliminar:hover { background: #333; }
+.btn-eliminar:hover { background: #444; }
+
+/* Logotipo pequeno */
+.logo {
+  display: block;
+  margin: 0 auto 32px auto;
+  width: 120px;
+}
+
+/* Botões principais */
+button[type="submit"], .card button[type="submit"] {
+  width: 100%;
+  padding: 14px 0;
+  background: #174A68;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 7px;
+  font-size: 1.1rem;
+  margin-top: 8px;
+  transition: background 0.2s;
+  cursor: pointer;
+  box-shadow: 0 1px 4px #0001;
+}
+button[type="submit"]:hover, .card button[type="submit"]:hover {
+  background: #205c85;
+}
+
+.start-btn {
+  width: 100%;
+  padding: 14px 0;
+  background: #1BB24A;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.start-btn:hover { background: #139a3a; }
+
+.stop-btn {
+  width: 100%;
+  padding: 14px 0;
+  background: #d06613;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.stop-btn:hover { background: #ad5310; }
 
 .logout-btn {
   width: 100%;
@@ -216,3 +261,117 @@ h2, h3 {
   transition: background 0.2s;
 }
 .logout-btn:hover { background: #666; }
+
+/* Link de ação alternativa */
+.alt-action {
+  text-align: center;
+  margin-top: 18px;
+}
+.alt-action button {
+  background: none;
+  border: none;
+  color: #EA6D22;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 2px;
+  text-decoration: underline;
+}
+.alt-action button:hover {
+  text-decoration: none;
+  color: #b95311;
+}
+.message {
+  margin-top: 12px;
+  color: darkred;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* Inputs */
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px 10px;
+  border: 1px solid #4543af;
+  border-radius: 7px;
+  margin: 10px 0 12px 0;
+  font-size: 1.08rem;
+  background: #ffffff;
+  color: #223 !important;
+  box-sizing: border-box;
+  outline: none;
+  transition: border 0.18s;
+}
+input:focus {
+  border: 1.5px solid #174A68;
+}
+input::placeholder {
+  color: #a0a0a0;
+  opacity: 1;
+}
+
+/* Título */
+h2 {
+  color: #174A68;
+  text-align: center;
+  margin-bottom: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Responsivo para ecrãs pequenos */
+@media (max-width: 1100px) {
+  .painel-root {
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+  }
+  .painel-mapa, .painel-utilizadores {
+    width: 98vw;
+    min-width: unset;
+    max-width: 99vw;
+    padding: 16px 6px;
+  }
+  .painel-mapa-leaflet {
+    height: 260px;
+  }
+}
+@media (max-width: 720px) {
+  .painel-mapa, .painel-utilizadores {
+    padding: 9px 1vw;
+    width: 99vw;
+  }
+  .painel-mapa-leaflet {
+    height: 180px;
+  }
+  .acao-botoes {
+    flex-direction: column;
+    gap: 7px;
+    align-items: flex-start;
+  }
+  .acao-botoes button {
+    min-width: unset;
+    width: 100%;
+  }
+}
+@media (max-width: 480px) {
+  .card,
+  .dashboard-card {
+    padding: 24px 8px;
+    max-width: 98vw;
+  }
+  .logo, .logo-painel {
+    width: 70px;
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-size: 1.1rem;
+  }
+  .painel-utilizadores {
+    padding: 12px 2px;
+    min-width: 96vw;
+    width: 99vw;
+  }
+}
