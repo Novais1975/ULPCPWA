@@ -1,4 +1,3 @@
-/* Reset & background */
 html, body, #root {
   height: 100%;
   width: 100vw;
@@ -10,7 +9,6 @@ html, body, #root {
   overflow-x: hidden;
 }
 
-/* Centralização */
 .center-wrapper {
   min-height: 100vh;
   height: 100vh;
@@ -19,22 +17,7 @@ html, body, #root {
   justify-content: center;
 }
 
-/* Cartão login/registo */
-.card {
-  background: #fff;
-  padding: 40px 32px;
-  border-radius: 18px;
-  box-shadow: 0 2px 12px #0002;
-  max-width: 380px;
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Cartão dashboard operacional */
-.dashboard-card {
+.card, .dashboard-card {
   background: #fff;
   padding: 40px 32px;
   border-radius: 18px;
@@ -48,7 +31,23 @@ html, body, #root {
   align-items: center;
 }
 
-/* ----- PAINEL DE COMANDO DISPOSIÇÃO GERAL ----- */
+.logo, .logo-painel {
+  display: block;
+  width: 120px;
+  margin-bottom: 12px;
+}
+
+.logo-painel {
+  margin-bottom: 0;
+}
+
+h2, h3 {
+  color: #174A68;
+  text-align: left;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
 .painel-root {
   display: flex;
   flex-direction: row;
@@ -59,69 +58,42 @@ html, body, #root {
   margin-top: 32px;
 }
 
-/* Card do mapa */
 .painel-mapa {
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 2px 12px #0002;
-  padding: 28px 24px 26px 24px;
-  min-width: 530px;
-  width: 660px;
+  padding: 28px 30px 24px 30px;
+  min-width: 460px;
+  width: 630px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-start;
-}
-
-.painel-mapa-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  width: 100%;
-  margin-bottom: 5px;
-}
-
-.logo-painel {
-  width: 88px;
-  margin-right: 18px;
-  margin-bottom: 0;
-  margin-top: 4px;
-}
-
-.painel-mapa-title {
-  font-size: 2.2rem;
-  color: #174A68;
-  font-weight: 700;
-  letter-spacing: 0.02em;
 }
 
 .painel-mapa-leaflet {
   width: 100%;
-  height: 525px;
-  margin-top: 18px;
+  height: 480px;
+  margin-top: 14px;
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 1px 6px #0002;
 }
 
-/* Card da gestão de utilizadores */
 .painel-utilizadores {
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 2px 12px #0002;
-  padding: 30px 26px 20px 26px;
-  min-width: 420px;
-  width: 490px;
-  max-width: 98vw;
+  padding: 28px 32px 18px 32px;
+  min-width: 370px;
+  width: 510px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Tabela de gestão - cores melhoradas */
 .tabela-gestao {
   width: 100%;
-  max-height: 340px;
+  max-height: 370px;
   overflow-y: auto;
   background: #f7fafd;
   border-radius: 8px;
@@ -136,84 +108,100 @@ html, body, #root {
   font-size: 0.95em;
 }
 
-.tabela-gestao th {
-  font-size: 1.05em;
-  background: #e4edf7;
-  color: #174A68;
-  padding: 8px 6px;
-  font-weight: 700;
+.tabela-gestao th, .tabela-gestao td {
+  padding: 5px 8px;
+  white-space: nowrap;
+  text-align: left;
+  border-bottom: 1px solid #e3e7ee;
 }
 
-.tabela-gestao td {
-  padding: 6px 6px;
-  font-size: 0.97em;
-  background: #fff;
-  color: #174A68;
-  border-bottom: 1px solid #e4e4e4;
+.tabela-gestao tr:nth-child(2n) {
+  background: #f5f8fd;
 }
 
-.tabela-gestao tr:last-child td {
-  border-bottom: none;
-}
-
-/* Ações dos botões - stack */
 .acao-botoes {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  flex-direction: row;
+  gap: 12px;
+  justify-content: flex-start;
+  padding: 7px 0 10px 2px;
 }
 
-/* Botões principais - cores melhoradas */
-button[type="submit"], .card button[type="submit"] {
-  width: 100%;
-  padding: 14px 0;
-  background: #174A68;
-  color: #fff;
-  font-weight: 600;
-  border: none;
-  border-radius: 7px;
-  font-size: 1.1rem;
-  margin-top: 8px;
-  transition: background 0.2s;
-  cursor: pointer;
-  box-shadow: 0 1px 4px #0001;
+@media (max-width: 700px) {
+  .painel-root {
+    flex-direction: column;
+    gap: 26px;
+    align-items: center;
+  }
+  .painel-mapa, .painel-utilizadores {
+    width: 98vw;
+    min-width: unset;
+    max-width: 99vw;
+    padding: 14px 5px;
+  }
+  .painel-mapa-leaflet {
+    height: 220px;
+  }
+  .tabela-gestao {
+    max-height: 200px;
+  }
 }
 
-button[type="submit"]:hover, .card button[type="submit"]:hover {
-  background: #205c85;
+@media (max-width: 470px) {
+  .painel-mapa, .painel-utilizadores, .card, .dashboard-card {
+    padding: 12px 4px;
+    max-width: 99vw;
+  }
+  .painel-mapa-leaflet {
+    height: 140px;
+  }
+  .logo, .logo-painel {
+    width: 62px;
+    margin-bottom: 4px;
+  }
+  h2, h3 { font-size: 1rem; }
 }
 
-.start-btn {
-  width: 100%;
-  padding: 14px 0;
-  background: #1BB24A;
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-top: 8px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.start-btn:hover { background: #139a3a; }
-
-.stop-btn {
-  width: 100%;
-  padding: 14px 0;
+.btn-admin {
   background: #d06613;
   color: #fff;
   border: none;
   border-radius: 7px;
-  font-size: 1.1rem;
+  padding: 7px 14px;
+  font-size: 1em;
   font-weight: 600;
-  margin-top: 8px;
-  margin-bottom: 10px;
   cursor: pointer;
-  transition: background 0.2s;
+  margin-right: 7px;
+  transition: background 0.17s;
 }
-.stop-btn:hover { background: #ad5310; }
+.btn-admin:hover { background: #ad5310; }
+
+.btn-ativar {
+  background: #1BB24A;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 14px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 7px;
+  transition: background 0.16s;
+}
+.btn-ativar:hover { background: #139a3a; }
+
+.btn-eliminar {
+  background: #888;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 14px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.btn-eliminar:hover { background: #333; }
 
 .logout-btn {
   width: 100%;
@@ -228,204 +216,3 @@ button[type="submit"]:hover, .card button[type="submit"]:hover {
   transition: background 0.2s;
 }
 .logout-btn:hover { background: #666; }
-
-/* Botões de gestão de utilizadores */
-.btn-admin {
-  background: #d06613 !important;
-  color: #fff !important;
-  font-weight: 600;
-  border: none;
-  border-radius: 7px;
-  padding: 7px 0;
-  width: 100%;
-  font-size: 0.98em;
-  cursor: pointer;
-  margin-bottom: 2px;
-  transition: background 0.18s;
-}
-.btn-admin:hover { background: #ad5310 !important; }
-
-.btn-ativar {
-  background: #1BB24A !important;
-  color: #fff !important;
-  font-weight: 600;
-  border: none;
-  border-radius: 7px;
-  padding: 7px 0;
-  width: 100%;
-  font-size: 0.98em;
-  cursor: pointer;
-  margin-bottom: 2px;
-  transition: background 0.18s;
-}
-.btn-ativar:hover { background: #139a3a !important; }
-
-.btn-eliminar {
-  background: #b6b6b6 !important;
-  color: #fff !important;
-  font-weight: 600;
-  border: none;
-  border-radius: 7px;
-  padding: 7px 0;
-  width: 100%;
-  font-size: 0.97em;
-  cursor: pointer;
-  margin-bottom: 0;
-  transition: background 0.15s;
-}
-.btn-eliminar:hover { background: #7e7e7e !important; }
-
-.tabela-gestao td span {
-  font-weight: 600;
-}
-
-.tabela-gestao td .sim { color: #1BB24A; }
-.tabela-gestao td .nao { color: #c92424; }
-
-/* Link de ação alternativa */
-.alt-action {
-  text-align: center;
-  margin-top: 18px;
-}
-.alt-action button {
-  background: none;
-  border: none;
-  color: #EA6D22;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-top: 2px;
-  text-decoration: underline;
-}
-.alt-action button:hover {
-  text-decoration: none;
-  color: #b95311;
-}
-.message {
-  margin-top: 12px;
-  color: darkred;
-  text-align: center;
-  font-size: 1rem;
-}
-
-/* Inputs */
-input[type="email"],
-input[type="password"],
-input[type="text"] {
-  width: 100%;
-  padding: 12px 10px;
-  border: 1px solid #4543af;
-  border-radius: 7px;
-  margin: 10px 0 12px 0;
-  font-size: 1.08rem;
-  background: #ffffff;
-  color: #223 !important;
-  box-sizing: border-box;
-  outline: none;
-  transition: border 0.18s;
-}
-input:focus {
-  border: 1.5px solid #174A68;
-}
-input::placeholder {
-  color: #a0a0a0;
-  opacity: 1;
-}
-
-/* Logotipo pequeno */
-.logo {
-  display: block;
-  margin: 0 auto 32px auto;
-  width: 120px;
-}
-
-/* Título */
-h2 {
-  color: #174A68;
-  text-align: center;
-  margin-bottom: 18px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-/* Responsivo para ecrãs pequenos */
-@media (max-width: 1100px) {
-  .painel-root {
-    flex-direction: column;
-    gap: 24px;
-    align-items: center;
-  }
-  .painel-mapa, .painel-utilizadores {
-    width: 98vw;
-    min-width: unset;
-    max-width: 99vw;
-    padding: 16px 6px;
-  }
-  .painel-mapa-leaflet {
-    height: 300px;
-  }
-}
-
-@media (max-width: 720px) {
-  .painel-mapa, .painel-utilizadores {
-    padding: 9px 1vw;
-    width: 99vw;
-  }
-  .painel-mapa-leaflet {
-    height: 200px;
-  }
-}
-
-@media (max-width: 600px) {
-  .painel-mapa-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-  }
-  .painel-mapa-title {
-    font-size: 1.3rem;
-  }
-  .logo-painel {
-    width: 52px;
-  }
-  .painel-utilizadores, .painel-mapa {
-    min-width: unset;
-    width: 99vw;
-    padding: 8px 2vw;
-  }
-  .tabela-gestao th, .tabela-gestao td {
-    font-size: 0.85em;
-    padding: 5px 3px;
-  }
-}
-
-@media (max-width: 480px) {
-  .card,
-  .dashboard-card {
-    padding: 18px 4px;
-    max-width: 99vw;
-  }
-  .logo, .logo-painel {
-    width: 52px;
-    margin-bottom: 8px;
-  }
-  h2 {
-    font-size: 1.03rem;
-  }
-  .painel-utilizadores, .painel-mapa {
-    min-width: unset;
-    width: 99vw;
-    padding: 5px 0vw;
-  }
-  .tabela-gestao th, .tabela-gestao td {
-    font-size: 0.8em;
-    padding: 4px 1px;
-  }
-  .painel-mapa-title {
-    font-size: 1.04rem;
-  }
-  .acao-botoes {
-    flex-direction: column;
-    gap: 2px;
-  }
-}
