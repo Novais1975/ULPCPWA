@@ -64,14 +64,10 @@ export default function DashboardComando({ onLogout }) {
     }
   }
 
-  // Apanhar localização ativa desse utilizador (assume só 1 por user)
   function getLastLocalizacao(utilizadorId) {
     const locs = localizacoes.filter(l => l.utilizador_id === utilizadorId);
     return locs.length ? locs[0] : null;
   }
-
-  // Cálculo do número de operacionais únicos com localização ativa
-  const operacionaisAtivos = [...new Set(localizacoes.map(l => l.utilizador_id))].length;
 
   return (
     <div className="painel-root">
@@ -83,7 +79,7 @@ export default function DashboardComando({ onLogout }) {
         </div>
         <div style={{ fontWeight: 600, marginBottom: 10, color: "#135" }}>
           Operacionais a partilhar localização:{" "}
-          {operacionaisAtivos}
+          {localizacoes.length}
         </div>
         <div className="painel-mapa-leaflet">
           <MapContainer
@@ -104,18 +100,21 @@ export default function DashboardComando({ onLogout }) {
                   position={[loc.latitude, loc.longitude]}
                 >
                   <Popup>
-                    <div style={{ fontSize: "1em", minWidth: 180 }}>
+                    <div style={{ fontSize: "1em", minWidth: 160 }}>
                       <b>{u.nome}</b><br />
                       <span style={{ fontSize: "0.96em", color: "#357" }}>{u.unidade}</span>
                       <hr style={{ margin: "4px 0" }} />
                       <b>Coords:</b> {loc.latitude?.toFixed(5)}, {loc.longitude?.toFixed(5)}<br />
                       <b>Direção:</b> {loc.direcao !== null && loc.direcao !== undefined ? loc.direcao + "º" : "N/A"}<br />
                       <b>Velocidade:</b> {loc.velocidade !== null && loc.velocidade !== undefined ? (loc.velocidade * 3.6).toFixed(1) + " km/h" : "N/A"}<br />
-                      <b>Data/Hora:</b>{" "}
-                      {loc.created_at
-                        ? new Date(loc.created_at).toLocaleString("pt-PT", {
-                            day: "2-digit", month: "2-digit", year: "2-digit",
-                            hour: "2-digit", minute: "2-digit", second: "2-digit"
+                      <b>Data/Hora:</b> {loc.criado_em
+                        ? new Date(loc.criado_em).toLocaleString("pt-PT", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit"
                           })
                         : "N/A"}
                     </div>
@@ -136,37 +135,28 @@ export default function DashboardComando({ onLogout }) {
           <table>
             <thead>
               <tr>
-                <th>Nome</th>
-                <th>Unidade</th>
-                <th>Telemóvel</th>
-                <th>Aprovado</th>
-                <th>Ativo</th>
-                <th>Perfil</th>
+                <th style={{ color: "#174A68" }}>Nome</th>
+                <th style={{ color: "#174A68" }}>Unidade</th>
+                <th style={{ color: "#174A68" }}>Telemóvel</th>
+                <th style={{ color: "#174A68" }}>Aprovado</th>
+                <th style={{ color: "#174A68" }}>Ativo</th>
+                <th style={{ color: "#174A68" }}>Perfil</th>
               </tr>
             </thead>
             <tbody>
               {utilizadores.map(u => (
                 <React.Fragment key={u.id}>
                   <tr>
-                    <td style={{ fontWeight: 600, color: "#223" }}>{u.nome}</td>
-                    <td style={{ color: "#333" }}>{u.unidade}</td>
-                    <td style={{ color: "#223" }}>{u.telemovel}</td>
-                    <td style={{
-                      color: u.aprovado ? "#218c3b" : "#b22e2e",
-                      fontWeight: 600
-                    }}>
+                    <td style={{ fontWeight: 600, color: "#1d2b36" }}>{u.nome}</td>
+                    <td style={{ color: "#1d2b36" }}>{u.unidade}</td>
+                    <td style={{ color: "#1d2b36" }}>{u.telemovel}</td>
+                    <td style={{ color: u.aprovado ? "#12a13b" : "#cb2222", fontWeight: 500 }}>
                       {u.aprovado ? "Sim" : "Não"}
                     </td>
-                    <td style={{
-                      color: u.ativo ? "#218c3b" : "#b22e2e",
-                      fontWeight: 600
-                    }}>
+                    <td style={{ color: u.ativo ? "#12a13b" : "#cb2222", fontWeight: 500 }}>
                       {u.ativo ? "Sim" : "Não"}
                     </td>
-                    <td style={{
-                      color: u.role === "admin" ? "#174A68" : "#43484d",
-                      fontWeight: 600
-                    }}>
+                    <td style={{ color: u.role === "admin" ? "#174A68" : "#1d2b36" }}>
                       {u.role === "admin" ? "Admin" : "Operacional"}
                     </td>
                   </tr>
