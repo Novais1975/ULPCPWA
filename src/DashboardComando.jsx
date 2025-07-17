@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import * as XLSX from "xlsx";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
+// Corrige ícone do marcador no Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
@@ -14,6 +16,13 @@ L.Icon.Default.mergeOptions({
 export default function DashboardComando({ onLogout }) {
   const [utilizadores, setUtilizadores] = useState([]);
   const [localizacoes, setLocalizacoes] = useState([]);
+  const [filtros, setFiltros] = useState({
+    dataInicio: "",
+    dataFim: "",
+    utilizadorId: "",
+    unidade: "",
+  });
+  const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
     fetchUtilizadores();
@@ -69,17 +78,103 @@ export default function DashboardComando({ onLogout }) {
     return locs.length ? locs[0] : null;
   }
 
+  // -------- EXPORTAÇÃO EXCEL ---------
+  async function exportarParaExcel() {
+    setIsExporting(true);
+
+    // 1. Buscar todos os utilizadores (para nomes/unidades)
+    const { data: users } = await supabase.from("utilizadores").select("*");
+
+    // 2. Construir filtro para query localizacoes
+    let query = supabase.from("localizacoes").select("*");
+    if (filtros.utilizadorId)
+      query = query.eq("utilizador_id", filtros.utilizadorId);
+    if (filtros.dataInicio)
+      query = query.gte("criado_em", filtros.dataInicio + " 00:00:00");
+    if (filtros.dataFim)
+      query = query.lte("criado_em", filtros.dataFim + " 23:59:59");
+
+    // 3. Buscar localizações filtradas
+    const { data: locs } = await query;
+    if (!locs || locs.length === 0) {
+      alert("Sem dados para exportar!");
+      setIsExporting(false);
+      return;
+    }
+
+    // 4. Juntar info de utilizador e unidade
+    const locsCompletas = locs
+      .map(loc => {
+        const user = users.find(u => u.id === loc.utilizador_id);
+        if (filtros.unidade && user?.unidade !== filtros.unidade) return null;
+        return {
+          Nome: user?.nome || "",
+          Unidade: user?.unidade || "",
+          DataHora: new Date(loc.criado_em).toLocaleString("pt-PT", {
+            day: "2-digit", month: "2-digit", year: "2-digit",
+            hour: "2-digit", minute: "2-digit", second: "2-digit"
+          }),
+          Latitude: loc.latitude,
+          Longitude: loc.longitude,
+          Direcao: loc.direcao,
+          Velocidade: loc.velocidade,
+        };
+      })
+      .filter(Boolean);
+
+    // 5. Organizar folhas: por utilizador, unidade, dia
+    const porUtilizador = {};
+    const porUnidade = {};
+    const porDia = {};
+
+    for (const row of locsCompletas) {
+      // Por utilizador
+      if (!porUtilizador[row.Nome]) porUtilizador[row.Nome] = [];
+      porUtilizador[row.Nome].push(row);
+
+      // Por unidade
+      if (!porUnidade[row.Unidade]) porUnidade[row.Unidade] = [];
+      porUnidade[row.Unidade].push(row);
+
+      // Por dia
+      // Usa só a data, no formato dd/mm/aa (primeira parte do DataHora)
+      const data = row.DataHora.split(",")[0];
+      if (!porDia[data]) porDia[data] = [];
+      porDia[data].push(row);
+    }
+
+    // 6. Criar workbook e sheets
+    const wb = XLSX.utils.book_new();
+
+    Object.entries(porUtilizador).forEach(([nome, dados]) => {
+      const ws = XLSX.utils.json_to_sheet(dados);
+      XLSX.utils.book_append_sheet(wb, ws, `Utilizador_${nome}`);
+    });
+    Object.entries(porUnidade).forEach(([uni, dados]) => {
+      const ws = XLSX.utils.json_to_sheet(dados);
+      XLSX.utils.book_append_sheet(wb, ws, `Unidade_${uni}`);
+    });
+    Object.entries(porDia).forEach(([dia, dados]) => {
+      const ws = XLSX.utils.json_to_sheet(dados);
+      XLSX.utils.book_append_sheet(wb, ws, `Dia_${dia.replaceAll("/", "-")}`);
+    });
+
+    // 7. Exportar
+    XLSX.writeFile(wb, "export-localizacoes.xlsx");
+    setIsExporting(false);
+  }
+
+  // ------- UI -------
   return (
     <div className="painel-root">
       {/* Card do mapa */}
       <div className="painel-mapa">
-        <div style={{ display: "flex", alignItems: "center", width: "100%", marginBottom: 0}}>
+        <div style={{ display: "flex", alignItems: "center", width: "100%", marginBottom: 0 }}>
           <img src="/logoprotecaocivil.png" alt="Proteção Civil" className="logo-painel" />
           <h2 style={{ marginLeft: 8, marginBottom: 0 }}>Painel de Comando</h2>
         </div>
         <div style={{ fontWeight: 600, marginBottom: 8, color: "#135" }}>
-          Operacionais a partilhar localização:{" "}
-          {localizacoes.length}
+          Operacionais a partilhar localização: {localizacoes.length}
         </div>
         <div className="painel-mapa-leaflet">
           <MapContainer
@@ -109,13 +204,13 @@ export default function DashboardComando({ onLogout }) {
                       <b>Velocidade:</b> {loc.velocidade !== null && loc.velocidade !== undefined ? (loc.velocidade * 3.6).toFixed(1) + " km/h" : "N/A"}<br />
                       <b>Data/Hora:</b> {loc.criado_em
                         ? new Date(loc.criado_em).toLocaleString("pt-PT", {
-                            day: "2-digit",
-                            month: "2-digit",
-                            year: "2-digit",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            second: "2-digit"
-                          })
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          second: "2-digit"
+                        })
                         : "N/A"}
                     </div>
                   </Popup>
@@ -128,9 +223,79 @@ export default function DashboardComando({ onLogout }) {
 
       {/* Card gestão de utilizadores */}
       <div className="painel-utilizadores">
-        <h3 style={{ marginTop: 0, marginBottom: 8, color: "#174A68", textAlign: "center" }}>
+
+        {/* Exportação de Localizações */}
+        <div style={{
+          marginBottom: 18,
+          paddingBottom: 14,
+          borderBottom: "2px solid #e8eaed"
+        }}>
+          <h3 style={{
+            marginTop: 0,
+            marginBottom: 12,
+            color: "#174A68",
+            textAlign: "center",
+            letterSpacing: ".01em"
+          }}>
+            Exportação de Localizações
+          </h3>
+          <div style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 10,
+            alignItems: "center",
+            justifyContent: "center"
+          }}>
+            <input
+              type="date"
+              value={filtros.dataInicio}
+              onChange={e => setFiltros(f => ({ ...f, dataInicio: e.target.value }))}
+              style={{ padding: 4 }}
+              title="Data de início do intervalo"
+            />
+            <input
+              type="date"
+              value={filtros.dataFim}
+              onChange={e => setFiltros(f => ({ ...f, dataFim: e.target.value }))}
+              style={{ padding: 4 }}
+              title="Data de fim do intervalo"
+            />
+            <select
+              value={filtros.utilizadorId}
+              onChange={e => setFiltros(f => ({ ...f, utilizadorId: e.target.value }))}
+              style={{ padding: 4 }}
+              title="Filtrar por utilizador"
+            >
+              <option value="">Todos Utilizadores</option>
+              {utilizadores.map(u => <option value={u.id} key={u.id}>{u.nome}</option>)}
+            </select>
+            <select
+              value={filtros.unidade}
+              onChange={e => setFiltros(f => ({ ...f, unidade: e.target.value }))}
+              style={{ padding: 4 }}
+              title="Filtrar por unidade"
+            >
+              <option value="">Todas Unidades</option>
+              {Array.from(new Set(utilizadores.map(u => u.unidade)))
+                .filter(Boolean)
+                .map(uni => <option key={uni} value={uni}>{uni}</option>)}
+            </select>
+            <button
+              onClick={exportarParaExcel}
+              disabled={isExporting}
+              style={{ marginLeft: 12, minWidth: 170, padding: "7px 14px", fontWeight: 600, fontSize: "1em" }}
+              title="Exportar localizações filtradas para Excel"
+            >
+              {isExporting ? "A exportar..." : "Exportar para Excel"}
+            </button>
+          </div>
+        </div>
+
+        {/* Título da tabela de gestão */}
+        <h3 style={{ marginTop: 24, marginBottom: 8, color: "#174A68", textAlign: "center" }}>
           Gestão de Utilizadores
         </h3>
+
         <div className="tabela-gestao">
           <table>
             <thead>
@@ -164,16 +329,36 @@ export default function DashboardComando({ onLogout }) {
                     <td colSpan={6}>
                       <div className="acao-botoes">
                         {u.ativo ? (
-                          <button className="btn-admin" onClick={() => bloquearUtilizador(u.id)}>Bloquear</button>
+                          <button
+                            className="btn-admin"
+                            onClick={() => bloquearUtilizador(u.id)}
+                            title="Bloquear utilizador (não pode aceder à app)"
+                          >Bloquear</button>
                         ) : (
-                          <button className="btn-ativar" onClick={() => desbloquearUtilizador(u.id)}>Desbloquear</button>
+                          <button
+                            className="btn-ativar"
+                            onClick={() => desbloquearUtilizador(u.id)}
+                            title="Desbloquear utilizador (restaurar acesso)"
+                          >Desbloquear</button>
                         )}
                         {u.role === "admin" ? (
-                          <button className="btn-admin" onClick={() => removerAdmin(u.id)}>Remover Admin</button>
+                          <button
+                            className="btn-admin"
+                            onClick={() => removerAdmin(u.id)}
+                            title="Remover privilégios de administrador"
+                          >Remover Admin</button>
                         ) : (
-                          <button className="btn-ativar" onClick={() => tornarAdmin(u.id)}>Tornar Admin</button>
+                          <button
+                            className="btn-ativar"
+                            onClick={() => tornarAdmin(u.id)}
+                            title="Tornar este utilizador administrador"
+                          >Tornar Admin</button>
                         )}
-                        <button className="btn-eliminar" onClick={() => eliminarUtilizador(u.id)}>Eliminar</button>
+                        <button
+                          className="btn-eliminar"
+                          onClick={() => eliminarUtilizador(u.id)}
+                          title="Eliminar utilizador (ação irreversível!)"
+                        >Eliminar</button>
                       </div>
                     </td>
                   </tr>
