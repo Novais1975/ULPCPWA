@@ -73,11 +73,11 @@ export default function DashboardComando({ onLogout }) {
     <div className="painel-root">
       {/* Card do mapa */}
       <div className="painel-mapa">
-        <div style={{ display: "flex", alignItems: "center", width: "100%", marginBottom: 8 }}>
+        <div style={{ display: "flex", alignItems: "center", width: "100%", marginBottom: 0}}>
           <img src="/logoprotecaocivil.png" alt="Proteção Civil" className="logo-painel" />
-          <h2 style={{ marginLeft: 18, marginBottom: 0 }}>Painel de Comando</h2>
+          <h2 style={{ marginLeft: 8, marginBottom: 0 }}>Painel de Comando</h2>
         </div>
-        <div style={{ fontWeight: 600, marginBottom: 10, color: "#135" }}>
+        <div style={{ fontWeight: 600, marginBottom: 8, color: "#135" }}>
           Operacionais a partilhar localização:{" "}
           {localizacoes.length}
         </div>
@@ -85,7 +85,7 @@ export default function DashboardComando({ onLogout }) {
           <MapContainer
             center={[39.74362, -8.80705]}
             zoom={12}
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "120%", height: "120%" }}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
@@ -128,7 +128,7 @@ export default function DashboardComando({ onLogout }) {
 
       {/* Card gestão de utilizadores */}
       <div className="painel-utilizadores">
-        <h3 style={{ marginTop: 0, marginBottom: 18, color: "#174A68", textAlign: "center" }}>
+        <h3 style={{ marginTop: 0, marginBottom: 8, color: "#174A68", textAlign: "center" }}>
           Gestão de Utilizadores
         </h3>
         <div className="tabela-gestao">
