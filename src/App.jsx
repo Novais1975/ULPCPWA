@@ -8,14 +8,11 @@ import "./App.css";
 
 export default function App() {
   const [view, setView] = useState("login");
-  const [user, setUser] = useState(null);         // Info básica do auth
-  const [perfil, setPerfil] = useState(null);     // Info da tabela utilizadores
+  const [user, setUser] = useState(null);         
+  const [perfil, setPerfil] = useState(null);     
 
-  // Função chamada após login bem-sucedido
   async function handleLogin(authUser) {
     setUser(authUser);
-
-    // Buscar perfil na tabela utilizadores
     const { data } = await supabase
       .from("utilizadores")
       .select("*")
@@ -35,7 +32,6 @@ export default function App() {
     }
   }
 
-  // Botão para escolha de painel (só para comandos/admin)
   function EscolherPainel({ onOperacional, onComando }) {
     return (
       <div className="dashboard-card">
@@ -58,43 +54,51 @@ export default function App() {
     );
   }
 
-  return (
-    <div className="center-wrapper">
-      {/* Apenas login e registo ficam dentro do .card */}
-      <div className={view === "login" || view === "register" ? "card" : ""}>
-        {view === "login" && (
-          <Login
-            setView={setView}
-            onLogin={handleLogin}
-          />
-        )}
-        {view === "register" && <Register setView={setView} />}
-        {view === "escolherpainel" && (
-          <EscolherPainel
-            onOperacional={() => setView("dashboard")}
-            onComando={() => setView("comando")}
-          />
-        )}
-        {view === "dashboard" && (
-          <DashboardOperacional
-            user={user}
-            onLogout={() => {
-              setUser(null);
-              setPerfil(null);
-              setView("login");
-            }}
-          />
-        )}
-        {view === "comando" && (
-          <DashboardComando
-            onLogout={() => {
-              setUser(null);
-              setPerfil(null);
-              setView("login");
-            }}
-          />
-        )}
+  // Renderização final
+  if (view === "login" || view === "register") {
+    return (
+      <div className="center-wrapper">
+        <div className="card">
+          {view === "login" && <Login setView={setView} onLogin={handleLogin} />}
+          {view === "register" && <Register setView={setView} />}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  if (view === "escolherpainel") {
+    return (
+      <EscolherPainel
+        onOperacional={() => setView("dashboard")}
+        onComando={() => setView("comando")}
+      />
+    );
+  }
+
+  if (view === "dashboard") {
+    return (
+      <DashboardOperacional
+        user={user}
+        onLogout={() => {
+          setUser(null);
+          setPerfil(null);
+          setView("login");
+        }}
+      />
+    );
+  }
+
+  if (view === "comando") {
+    return (
+      <DashboardComando
+        onLogout={() => {
+          setUser(null);
+          setPerfil(null);
+          setView("login");
+        }}
+      />
+    );
+  }
+
+  return null;
 }
