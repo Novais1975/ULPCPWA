@@ -106,7 +106,7 @@ export default function DashboardOperacional({ user, onLogout }) {
         alert("Erro de geolocalização: " + err.message);
         setSharing(false);
       },
-      { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
     );
   };
 
@@ -155,7 +155,7 @@ export default function DashboardOperacional({ user, onLogout }) {
         <strong>Nome:</strong> {utilizador.nome}<br />
         <strong>Unidade:</strong> {utilizador.unidade}
       </div>
-      <div style={{ margin: "18px 0", fontWeight: 500, textAlign: "center" }}>
+      <div style={{ color: "#0f0f0fff", margin: "18px 0", fontWeight: 500, textAlign: "center" }}>
         Estado:{" "}
         {sharing ? (
           <span style={{ color: "#1BB24A" }}>A PARTILHAR LOCALIZAÇÃO</span>

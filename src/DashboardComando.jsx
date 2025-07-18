@@ -8,7 +8,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import EstatisticasDashboard from "./EstatisticasDashboard";
 
-// Corrige ícone do marcador no Leaflet
+// Corrige ícone do marcador no Leaflet (não apagues estas 3 linhas)
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
@@ -27,6 +27,7 @@ export default function DashboardComando({ onLogout }) {
   });
   const [isExporting, setIsExporting] = useState(false);
 
+  // --- Carregar dados principais ---
   useEffect(() => {
     fetchUtilizadores();
     fetchLocalizacoes();
@@ -77,7 +78,7 @@ export default function DashboardComando({ onLogout }) {
   }
 
   function getLastLocalizacao(utilizadorId) {
-    const locs = localizacoes.filter(l => l.utilizador_id === utilizadorId);
+    const locs = localizacoes.filter(l => String(l.utilizador_id) === String(utilizadorId));
     return locs.length ? locs[0] : null;
   }
 
@@ -108,7 +109,7 @@ export default function DashboardComando({ onLogout }) {
     // 4. Juntar info de utilizador e unidade
     const locsCompletas = locs
       .map(loc => {
-        const user = users.find(u => u.id === loc.utilizador_id);
+        const user = users.find(u => String(u.id) === String(loc.utilizador_id));
         if (filtros.unidade && user?.unidade !== filtros.unidade) return null;
         return {
           Nome: user?.nome || "",
